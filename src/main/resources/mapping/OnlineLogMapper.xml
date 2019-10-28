@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pang.card.dao.OnlineLogDAO">
+    <sql id="onlineInfo">
+        log_id as logId,
+        login_time as loginTime,
+        last_time as lastTime,
+        log_week as logWeek,
+        t_online_log.user_id as userId
+    </sql>
+    <select id="getOnlineLogByMac" resultType="map">
+        select
+        <include refid="onlineInfo"/>
+        from t_online_log
+        inner join t_user u on t_online_log.user_id = u.user_id
+        where u.user_mac=#{mac}
+        ORDER BY last_time desc
+        limit 1
+    </select>
+
+    <update id="online">
+        update t_online_log
+        set login_time=#{loginTime},
+        last_time=#{lastTime},
+        log_week=#{logWeek}
+        where log_id=#{logId}
+    </update>
+
+
+    <insert id="addOnlineLog">
+        insert into t_online_log(login_time, last_time, log_week, user_id)
+        values
+        (#{loginTime},#{lastTime},#{logWeek},#{userId})
+    </insert>
+</mapper>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pang.card.dao.UserDAO">
+
+    <sql id="userInfo">
+        user_name as userName,
+        real_name as realName,
+        user_mac as userMac,
+        user_mail as userMail,
+        stu_id as stuId,
+        user_id as userId
+    </sql>
+    <insert id="register">
+        insert into t_user(user_name, real_name, password, user_mac, user_mail, stu_id)
+        VALUES
+        (#{userName},#{realName},#{password},#{mac},#{userMail},#{stuId})
+    </insert>
+    <select id="selectUserByUserName" resultType="int">
+        select count(*)
+        from t_user
+        where
+        user_name=#{userName}
+    </select>
+    <select id="selectUserByMac" resultType="int">
+        select count(*)
+        from t_user
+        where
+        user_mac=#{mac}
+    </select>
+    <select id="selectUserByUserMail" resultType="int">
+        select count(*)
+        from t_user
+        where
+        user_mail=#{userMail}
+    </select>
+    <select id="selectUserByStuId" resultType="int">
+        select count(*)
+        from t_user
+        where
+        stu_id=#{stuId}
+    </select>
+    <select id="login" resultType="map">
+        select
+          user_name as userName,
+          user_id as userId,
+          password as password
+        from t_user
+        where
+        user_name=#{userName,jdbcType=VARCHAR}
+    </select>
+    <select id="selectUserInfoByMac" resultType="map">
+        select
+          <include refid="userInfo"/>
+        from t_user
+        where
+        user_mac=#{mac}
+    </select>
+    <select id="selectUserInfoByUserId" resultType="map">
+        select
+        <include refid="userInfo"/>
+        from t_user
+        where
+        user_id=#{userId}
+    </select>
+</mapper>
