@@ -8,7 +8,7 @@ package com.pang.card.common.result;
  * @description: 统一异常
  * @date 2019/10/28 11:18
  */
-public class ResultException extends RuntimeException{
+public class ResultException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
     private int status;
@@ -21,10 +21,10 @@ public class ResultException extends RuntimeException{
         this.msg = msg;
     }
 
-    public ResultException(ResultEnum resultEnum){
+    public ResultException(ResultEnum resultEnum) {
         super(resultEnum.getMessage());
-        this.status=resultEnum.getStatus();
-        this.msg=resultEnum.getMessage();
+        this.status = resultEnum.getStatus();
+        this.msg = resultEnum.getMessage();
     }
 
     public int getStatus() {

@@ -2,6 +2,7 @@ package com.pang.card.dao;
 
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -39,11 +40,11 @@ public interface UserDAO {
 
     int selectUserByStuId(@Param("stuId") String stuId);
 
-    Map<String,Object> login(@Param("userName") String userName);
+    Map<String, Object> login(@Param("userName") String userName);
 
-    Map<String,Object> selectUserInfoByMac(@Param("mac") String mac);
+    Map<String, Object> selectUserInfoByMac(@Param("mac") String mac);
 
-    Map<String,Object> selectUserInfoByUserId(@Param("userId") Long userId);
+    Map<String, Object> selectUserInfoByUserId(@Param("userId") Long userId);
 
-
+    List<Map<String, Object>> selectAllUserInfo();
 }

@@ -17,12 +17,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ResponseBody
 public class ResultAdvice {
     @ExceptionHandler(value = ResultException.class)
-    public ResultJSON errorHandle(ResultException e){
-        ResultJSON resultJSON=new ResultJSON(e.getMsg(),e.getStatus());
+    public ResultJSON errorHandle(ResultException e) {
+        ResultJSON resultJSON = new ResultJSON(e.getMsg(), e.getStatus());
         return resultJSON;
     }
+
     @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
-    public ResultJSON methodHandle(HttpRequestMethodNotSupportedException e){
+    public ResultJSON methodHandle(HttpRequestMethodNotSupportedException e) {
         return new ResultJSON(ResultEnum.METHOD_NOT_ALLOWED);
     }
 }

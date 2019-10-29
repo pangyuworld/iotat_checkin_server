@@ -62,4 +62,9 @@
         where
         user_id=#{userId}
     </select>
+    <select id="selectAllUserInfo" resultType="map">
+        select
+        <include refid="userInfo"/>
+        from t_user
+    </select>
 </mapper>

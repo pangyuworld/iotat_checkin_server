@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -66,7 +67,7 @@ public class UserService {
         // SHA256加密
         password = new String(DigestUtil.sha256(password));
 
-        return userDAO.register(userName, password, mac, realName, userMail, stuId);
+        return userDAO.register(userName, password, mac.toUpperCase(), realName, userMail, stuId);
     }
 
     /**
@@ -115,6 +116,15 @@ public class UserService {
             throw new ResultException(ResultEnum.ILLEGAL_ARGUMENT);
         }
         return userDAO.selectUserInfoByMac(mac);
+    }
+
+    /**
+     * 获取所有的用户信息
+     *
+     * @return 所有的用户信息
+     */
+    public List<Map<String, Object>> getAllUserInfo() {
+        return userDAO.selectAllUserInfo();
     }
 
     /**

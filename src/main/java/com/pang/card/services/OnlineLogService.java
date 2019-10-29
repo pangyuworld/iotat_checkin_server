@@ -32,17 +32,19 @@ public class OnlineLogService {
     private final Set<String> MAC_SET = new HashSet<>();
 
     {
-        MAC_SET.add("f0-79-59-c6-22-80");
-        MAC_SET.add("58-69-6c-5f-b2-32");
+        MAC_SET.add("F0-79-59-C6-22-80");
+        MAC_SET.add("58-69-6C-5F-B2-32");
     }
 
     /**
      * 在线请求
-     * @param selfMac 个人mac地址
+     *
+     * @param selfMac   个人mac地址
      * @param commonMac 公共mac地址
      */
     public int getOnlineRequest(String selfMac, String commonMac) {
         if (!MAC_SET.contains(commonMac)) {
+            System.out.println(commonMac);
             throw new ResultException(400, "不在实验室环境");
         }
         Map<String, Object> userInfo = userDAO.selectUserInfoByMac(selfMac);
@@ -67,36 +69,36 @@ public class OnlineLogService {
 
     /**
      * 查询用户所在过的周数
+     *
      * @param userId 用户id
      */
-    public List<Long> getWeekList(Long userId){
+    public List<Long> getWeekList(Long userId) {
         return onlineLogDAO.getWeekListByUserId(userId);
     }
 
     /**
      * 获取用户某周的在线状态
-     * @param userId 用户id
+     *
+     * @param userId  用户id
      * @param logWeek 周数
      * @return 日志列表
      */
-    public Map<String,Object> getOnlineLogByWeek(Long userId, @Nullable Long logWeek){
-        if (logWeek==null||logWeek<=0){
-            logWeek= Long.valueOf(getWeek());
+    public Map<String, Object> getOnlineLogByWeek(Long userId, @Nullable Long logWeek) {
+        if (logWeek == null || logWeek <= 0) {
+            logWeek = Long.valueOf(getWeek());
         }
-        List<Map<String,Object>> logList=onlineLogDAO.getOnlineLogByWeek(userId, logWeek);
-        long totalMinutes=0;
+        List<Map<String, Object>> logList = onlineLogDAO.getOnlineLogByWeek(userId, logWeek);
+        long totalMinutes = 0;
         // 汇总时间
-        for (Map<String,Object> r:logList){
-            Long difference=DateUtil.between((Date) r.get("loginTime"),(Date) r.get("lastTime"),DateUnit.MINUTE);
-            totalMinutes+=difference;
+        for (Map<String, Object> r : logList) {
+            Long difference = DateUtil.between((Date) r.get("loginTime"), (Date) r.get("lastTime"), DateUnit.MINUTE);
+            totalMinutes += difference;
         }
-        Map<String,Object> result=new HashMap<>(10);
-        // 格式化为小时数
-        double totalMinutesF=totalMinutes/60.0;
-        DecimalFormat df =new DecimalFormat("#0.00");
+        Map<String, Object> result = new HashMap<>(10);
         // 添加结果
-        result.put("total",df.format(totalMinutesF));
-        result.put("data",logList);
+        result.put("total", getHour(totalMinutes));
+        result.put("week", logWeek);
+        result.put("data", logList);
         return result;
     }
 
@@ -111,7 +113,7 @@ public class OnlineLogService {
         long difference = DateUtil.between(date, new Date(), DateUnit.MINUTE);
         Integer startDay = DateUtil.dayOfMonth(date);
         Integer endDay = DateUtil.dayOfMonth(new Date());
-        return difference > 30 || (!startDay.equals(endDay));
+        return difference > 10 || (!startDay.equals(endDay));
     }
 
     /**
@@ -127,5 +129,17 @@ public class OnlineLogService {
         int year = DateUtil.year(date);
         String str = "" + year + "" + week;
         return Integer.parseInt(str);
+    }
+
+    /**
+     * 获取小时数
+     *
+     * @param minutes 分钟
+     * @return 小时数，保留两位小数
+     */
+    public String getHour(Long minutes) {
+        double totalMinutesF = minutes / 60.0;
+        DecimalFormat df = new DecimalFormat("#0.00");
+        return df.format(totalMinutesF);
     }
 }

@@ -26,11 +26,13 @@ public class ResultJSON<E> {
     public ResultJSON(E data) {
         this.data = data;
     }
-    public ResultJSON(E data,ResultEnum resultEnum) {
+
+    public ResultJSON(E data, ResultEnum resultEnum) {
         this.data = data;
-        this.message =resultEnum.getMessage();
-        this.status=resultEnum.getStatus();
+        this.message = resultEnum.getMessage();
+        this.status = resultEnum.getStatus();
     }
+
     public ResultJSON(String message, int status, E data) {
         this.message = message;
         this.status = status;
@@ -43,8 +45,8 @@ public class ResultJSON<E> {
     }
 
     public ResultJSON(ResultEnum resultEnum) {
-        this.message =resultEnum.getMessage();
-        this.status=resultEnum.getStatus();
+        this.message = resultEnum.getMessage();
+        this.status = resultEnum.getStatus();
     }
 
     public int getStatus() {
