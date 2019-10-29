@@ -32,4 +32,19 @@
         values
         (#{loginTime},#{lastTime},#{logWeek},#{userId})
     </insert>
+
+    <select id="getWeekListByUserId" resultType="long">
+        select distinct
+        log_week
+        from t_online_log
+        where user_id=#{userId}
+    </select>
+
+    <select id="getOnlineLogByWeek" resultType="map">
+        select
+        <include refid="onlineInfo"/>
+        from
+        t_online_log
+        where user_id=#{userId} and log_week=#{logWeek}
+    </select>
 </mapper>

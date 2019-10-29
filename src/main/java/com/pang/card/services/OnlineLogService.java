@@ -7,12 +7,11 @@ import com.pang.card.common.result.ResultException;
 import com.pang.card.dao.OnlineLogDAO;
 import com.pang.card.dao.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.text.DecimalFormat;
+import java.util.*;
 
 /**
  * @author pang
@@ -66,6 +65,41 @@ public class OnlineLogService {
                 (Long) logMap.get("logWeek"));
     }
 
+    /**
+     * 查询用户所在过的周数
+     * @param userId 用户id
+     */
+    public List<Long> getWeekList(Long userId){
+        return onlineLogDAO.getWeekListByUserId(userId);
+    }
+
+    /**
+     * 获取用户某周的在线状态
+     * @param userId 用户id
+     * @param logWeek 周数
+     * @return 日志列表
+     */
+    public Map<String,Object> getOnlineLogByWeek(Long userId, @Nullable Long logWeek){
+        if (logWeek==null||logWeek<=0){
+            logWeek= Long.valueOf(getWeek());
+        }
+        List<Map<String,Object>> logList=onlineLogDAO.getOnlineLogByWeek(userId, logWeek);
+        long totalMinutes=0;
+        // 汇总时间
+        for (Map<String,Object> r:logList){
+            Long difference=DateUtil.between((Date) r.get("loginTime"),(Date) r.get("lastTime"),DateUnit.MINUTE);
+            totalMinutes+=difference;
+        }
+        Map<String,Object> result=new HashMap<>(10);
+        // 格式化为小时数
+        double totalMinutesF=totalMinutes/60.0;
+        DecimalFormat df =new DecimalFormat("#0.00");
+        // 添加结果
+        result.put("total",df.format(totalMinutesF));
+        result.put("data",logList);
+        return result;
+    }
+
 
     /**
      * 计算参数日期是否与当前日期计算超时
@@ -74,7 +108,7 @@ public class OnlineLogService {
      * @return 是否超时
      */
     private boolean judgeTimeOut(Date date) {
-        long difference = DateUtil.between(date, new Date(), DateUnit.HOUR);
+        long difference = DateUtil.between(date, new Date(), DateUnit.MINUTE);
         Integer startDay = DateUtil.dayOfMonth(date);
         Integer endDay = DateUtil.dayOfMonth(new Date());
         return difference > 30 || (!startDay.equals(endDay));

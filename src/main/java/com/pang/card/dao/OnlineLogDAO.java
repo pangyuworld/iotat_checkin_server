@@ -3,6 +3,7 @@ package com.pang.card.dao;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,7 +39,7 @@ public interface OnlineLogDAO {
     /**
      * 插入新的日志
      *
-     * @param userId 用户id
+     * @param userId    用户id
      * @param loginTime
      * @param lastTime
      * @param logWeek
@@ -48,4 +49,21 @@ public interface OnlineLogDAO {
                      @Param("loginTime") Date loginTime,
                      @Param("lastTime") Date lastTime,
                      @Param("logWeek") Integer logWeek);
+
+    /**
+     * 获取用户签到的周数
+     *
+     * @param userId 用户id
+     * @return 返回的是用户在线过的周数列表，主要用于后面查询某一周的在线状态
+     */
+    List<Long> getWeekListByUserId(@Param("userId") Long userId);
+
+    /**
+     * 获取用户某周的在线表格
+     *
+     * @param userId  用户id
+     * @param logWeek 要查询的周数
+     * @return 得到的是周志列表
+     */
+    List<Map<String, Object>> getOnlineLogByWeek(@Param("userId") Long userId, @Param("logWeek") Long logWeek);
 }
