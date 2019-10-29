@@ -24,8 +24,10 @@ public class SendMailTask {
     @Autowired
     private UserService userService;
 
+    // 每周日晚上9点
     // @Scheduled(cron = "0 00 21 ? * SUN")
-    @Scheduled(cron = "0 0 0 */1 * ?")
+    // 每小时执行一次
+    @Scheduled(cron = "0 0 * * * ?")
     public void sendMail() {
         List<Map<String, Object>> userInfoList = userService.getAllUserInfo();
         for (Map<String, Object> map : userInfoList) {
