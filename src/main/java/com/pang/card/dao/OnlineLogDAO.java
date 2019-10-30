@@ -66,4 +66,5 @@ public interface OnlineLogDAO {
      * @return 得到的是周志列表
      */
     List<Map<String, Object>> getOnlineLogByWeek(@Param("userId") Long userId, @Param("logWeek") Long logWeek);
+
 }

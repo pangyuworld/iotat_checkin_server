@@ -8,6 +8,7 @@
         log_week as logWeek,
         t_online_log.user_id as userId
     </sql>
+
     <select id="getOnlineLogByMac" resultType="map">
         select
         <include refid="onlineInfo"/>
@@ -47,4 +48,5 @@
         t_online_log
         where user_id=#{userId} and log_week=#{logWeek}
     </select>
+
 </mapper>

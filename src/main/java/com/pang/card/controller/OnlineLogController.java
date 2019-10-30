@@ -40,4 +40,9 @@ public class OnlineLogController {
     public ResultJSON<Map<String, Object>> getOnlineLog(@PathVariable Long userId, @Nullable Long logWeek) {
         return new ResultJSON<>(service.getOnlineLogByWeek(userId, logWeek), ResultEnum.SUCCESS_OPTION);
     }
+
+    @RequestMapping(value = "/week/allLog", method = RequestMethod.GET)
+    public ResultJSON<List<Map<String,Object>>> getAllUserOnlineLog( @Nullable Long logWeek){
+        return new ResultJSON<>(service.getAllUserOnlineLog(logWeek),ResultEnum.SUCCESS_OPTION);
+    }
 }

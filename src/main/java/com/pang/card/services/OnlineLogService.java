@@ -85,7 +85,7 @@ public class OnlineLogService {
      */
     public Map<String, Object> getOnlineLogByWeek(Long userId, @Nullable Long logWeek) {
         if (logWeek == null || logWeek <= 0) {
-            logWeek = Long.valueOf(getWeek());
+            logWeek = (long) getWeek();
         }
         List<Map<String, Object>> logList = onlineLogDAO.getOnlineLogByWeek(userId, logWeek);
         long totalMinutes = 0;
@@ -99,6 +99,27 @@ public class OnlineLogService {
         result.put("total", getHour(totalMinutes));
         result.put("week", logWeek);
         result.put("data", logList);
+        return result;
+    }
+
+
+    /**
+     * 获取所有用户某周的日志
+     *
+     * @param logWeek 周id
+     * @return 所有用户某周的日志
+     */
+    public List<Map<String, Object>> getAllUserOnlineLog(@Nullable Long logWeek) {
+        if (logWeek == null || logWeek <= 0) {
+            logWeek = (long) getWeek();
+        }
+        List<Map<String, Object>> result = new LinkedList<>();
+        List<Map<String, Object>> userIdList = userDAO.selectAllUserInfo();
+        for (Map<String, Object> m : userIdList) {
+            Map<String, Object> onlineLog = this.getOnlineLogByWeek((Long) m.get("userId"), logWeek);
+            onlineLog.put("userInfo", m);
+            result.add(onlineLog);
+        }
         return result;
     }
 
