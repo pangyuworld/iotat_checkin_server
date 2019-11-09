@@ -7,6 +7,7 @@ import com.pang.card.common.result.ResultException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
@@ -35,6 +36,7 @@ public class MailService {
      *
      * @param userInfo 从数据库中提取的用户信息列表
      */
+    @Async
     public void sendSimpleMail(Map<String, Object> userInfo) {
         try {
             javaMailSender.send(generateMail((String) userInfo.get("realName"),
@@ -43,8 +45,8 @@ public class MailService {
         } catch (MessagingException e) {
             throw new ResultException(ResultEnum.SEND_MAIL_FAILE);
         }
-
     }
+
 
     /**
      * 生成邮件

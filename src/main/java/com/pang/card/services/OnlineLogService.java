@@ -21,7 +21,6 @@ import java.util.*;
  * @description:
  * @date 2019/10/28 19:53
  */
-@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Service
 public class OnlineLogService {
     @Autowired
