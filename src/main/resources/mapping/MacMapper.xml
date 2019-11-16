@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pang.card.dao.MacDAO">
+
+    <insert id="addNewMac">
+        insert into t_mac(mac_address) values (#{mac})
+    </insert>
+    <select id="getAllMac" resultType="String">
+        select  mac_address
+        from t_mac
+    </select>
+    <delete id="deleteMac">
+        delete from t_mac where mac_address=#{mac}
+    </delete>
+</mapper>

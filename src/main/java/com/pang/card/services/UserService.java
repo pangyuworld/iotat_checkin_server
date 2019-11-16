@@ -151,7 +151,7 @@ public class UserService {
      * @param userMail 邮箱
      */
     private boolean checkMail(String userMail) {
-        return ReUtil.isMatch("^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$", userMail);
+        return ReUtil.isMatch("^[A-Za-z0-9\\u4e00-\\u9fa5]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$", userMail);
     }
 
     /**
@@ -159,7 +159,7 @@ public class UserService {
      *
      * @param mac mac地址
      */
-    private boolean checkMac(String mac) {
+    public static boolean checkMac(String mac) {
         return ReUtil.isMatch("([A-Fa-f0-9]{2}-){5}[A-Fa-f0-9]{2}", mac);
     }
 

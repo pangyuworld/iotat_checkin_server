@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import java.text.DecimalFormat;
 import java.util.*;
 
+import static com.pang.card.initialization.MacSetInit.macSet;
+
 /**
  * @author pang
  * @version V1.0
@@ -28,13 +30,6 @@ public class OnlineLogService {
     @Autowired
     private UserDAO userDAO;
 
-    private final Set<String> MAC_SET = new HashSet<>();
-
-    {
-        MAC_SET.add("F0-79-59-C6-22-80");
-        MAC_SET.add("58-69-6C-5F-B2-32");
-    }
-
     /**
      * 在线请求
      *
@@ -42,7 +37,7 @@ public class OnlineLogService {
      * @param commonMac 公共mac地址
      */
     public int getOnlineRequest(String selfMac, String commonMac) {
-        if (!MAC_SET.contains(commonMac)) {
+        if (!macSet.contains(commonMac)) {
             System.out.println(commonMac);
             throw new ResultException(400, "不在实验室环境");
         }

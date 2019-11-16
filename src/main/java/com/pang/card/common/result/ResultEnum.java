@@ -20,7 +20,7 @@ public enum ResultEnum {
     NO_USER_EXIST(404, "用户不存在"),
     REPEAT_STU_ID(403, "学号已经注册"),
     METHOD_NOT_ALLOWED(400, "不合法的请求方式"),
-    SEND_MAIL_FAILE(400, "发送邮件失败");
+    SEND_MAIL_FAILED(400, "发送邮件失败");
     /**
      * 状态码
      */

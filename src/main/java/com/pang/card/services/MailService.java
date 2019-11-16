@@ -43,7 +43,7 @@ public class MailService {
                     (String) userInfo.get("userMail"),
                     (Long) userInfo.get("userId")));
         } catch (MessagingException e) {
-            throw new ResultException(ResultEnum.SEND_MAIL_FAILE);
+            throw new ResultException(ResultEnum.SEND_MAIL_FAILED);
         }
     }
 
