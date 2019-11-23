@@ -2,10 +2,8 @@ package com.pang.card.services;
 
 import com.pang.card.dao.MacDAO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import static com.pang.card.initialization.MacSetInit.macSet;

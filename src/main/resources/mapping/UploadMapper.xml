@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pang.card.dao.UploadDAO">
+    <sql id="baseList">
+        upload_id as uploadId,
+        upload_file_url as uploadFileUrl,
+        upload_time as uploadTime,
+        upload_version as uploadVersion,
+        upload_file_name as uploadFileName,
+        upload_file_size as uploadFileSize
+    </sql>
+    <insert id="uploadFile" parameterType="map">
+        insert into t_upload(upload_file_url, upload_time, upload_version, upload_file_name, upload_file_size) value
+        (#{uploadFileUrl},#{uploadTime},#{uploadVersion},#{uploadFileName},#{uploadFileSize})
+    </insert>
+    <select id="getUploadFile" resultType="map">
+        select
+        <include refid="baseList"></include>
+        from t_upload
+        where upload_version=#{uploadVersion}
+    </select>
+    <select id="getAllUploadFile" resultType="map">
+        select
+        <include refid="baseList"></include>
+        from t_upload
+    </select>
+    <select id="getLastUploadVersion" resultType="map">
+        select
+        <include refid="baseList"></include>
+        from t_upload
+        limit 1
+    </select>
+</mapper>
