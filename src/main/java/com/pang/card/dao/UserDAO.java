@@ -47,4 +47,7 @@ public interface UserDAO {
     Map<String, Object> selectUserInfoByUserId(@Param("userId") Long userId);
 
     List<Map<String, Object>> selectAllUserInfo();
+
+
+
 }
