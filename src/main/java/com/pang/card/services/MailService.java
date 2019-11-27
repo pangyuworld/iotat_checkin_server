@@ -59,7 +59,7 @@ public class MailService {
      */
     private MimeMessage generateMail(String userName, String userMail, Long userId) throws MessagingException {
         // 获取签到信息
-        Map<String, Object> onlineLogByWeek = onlineLogService.getOnlineLogByWeek(userId, null);
+        Map<String, Object> onlineLogByWeek = onlineLogService.getOnlineLogByWeek(userId, 201947L);
         // 获取签到日志列表
         List<Map<String, Object>> logList = (List) onlineLogByWeek.get("data");
         // 初始化message

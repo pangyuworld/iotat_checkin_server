@@ -82,6 +82,9 @@ public class OnlineLogService {
             logWeek = (long) getWeek();
         }
         List<Map<String, Object>> logList = onlineLogDAO.getOnlineLogByWeek(userId, logWeek);
+        if (logList == null) {
+            throw new ResultException(400,"没有在线信息");
+        }
         long totalMinutes = 0;
         // 汇总时间
         for (Map<String, Object> r : logList) {
